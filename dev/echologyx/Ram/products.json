@@ -1,7 +1,9 @@
+
 [
   {
     "id": 1,
     "category": "Tagesgeldkonto",
+    "categoryIcon" : "https://res.cloudinary.com/ramrachai/image/upload/v1708434932/ou9hjlu8orzfig3o5jd2.svg", 
     "title": "Tagesgeldkonto",
     "subtitle": "Kostenlos und sicher Vermögen parken",
     "features": [
@@ -15,6 +17,7 @@
   {
     "id": 2,
     "category": "Wertpapiere",
+    "categoryIcon" : "https://res.cloudinary.com/ramrachai/image/upload/v1708434932/x8mzqfnnxa55opyfvuft.svg", 
     "title": "Sparplan",
     "subtitle": "Kleine Sparrate, große Träume",
     "features": [
@@ -28,6 +31,7 @@
   {
     "id": 3,
     "category": "Wertpapiere",
+"categoryIcon" : "https://res.cloudinary.com/ramrachai/image/upload/v1708434932/x8mzqfnnxa55opyfvuft.svg", 
     "title": "Wertpapierdepot",
     "subtitle": "Vielfältige Möglichkeiten zum Vermögensaufbau",
     "features": [
@@ -41,6 +45,7 @@
   {
     "id": 4,
     "category": "Wertpapiere",
+    "categoryIcon" : "https://res.cloudinary.com/ramrachai/image/upload/v1708434932/x8mzqfnnxa55opyfvuft.svg", 
     "title": "Junior Depot",
     "subtitle": "Mittel- bis langfristig vorsorgen für Ihr Kind",
     "features": [
@@ -54,6 +59,7 @@
   {
     "id": 5,
     "category": "Girokonto",
+    "categoryIcon" : "https://res.cloudinary.com/ramrachai/image/upload/v1708434932/gstunorpjfyaugsf97sa.svg" , 
     "title": "Girokonto Essential",
     "subtitle": "Sehr gut bewertet mit vielfältigen Bezahlmöglichkeiten",
     "features": [
@@ -67,6 +73,7 @@
   {
     "id": 6,
     "category": "Girokonto",
+    "categoryIcon" : "https://res.cloudinary.com/ramrachai/image/upload/v1708434932/gstunorpjfyaugsf97sa.svg" , 
     "title": "Girokonto Unlimited",
     "subtitle": "Premium-Girokonto mit Visa Card Gold",
     "features": [
