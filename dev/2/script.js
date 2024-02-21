@@ -115,16 +115,19 @@ function renderCategoriesAndProducts() {
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        
     }
 
     .product-card div li {
         list-style: none;
         font-size: 16px;
         margin-bottom: 12px;
+        color: #111;
     }
     .product-card div p {
       font-size: 18px; 
       margin-bottom: 8px; 
+      color: #111;
     }
 
     .product-card div button{
@@ -138,6 +141,7 @@ function renderCategoriesAndProducts() {
     }
     .product-card div h3 {
       font-size: 2rem;
+      color: #111;
     }
 
 
