@@ -122,6 +122,10 @@ function renderCategoriesAndProducts() {
         font-size: 16px;
         margin-bottom: 12px;
     }
+    .product-card div p {
+      font-size: 18px; 
+      margin-bottom: 8px; 
+    }
 
     .product-card div button{
       background: #3db1c9;
@@ -142,10 +146,10 @@ function renderCategoriesAndProducts() {
     }
     .checkmark {
       position: absolute;
-      top: 5px;
-      right: 5px;
-      width: 20px;
-      height: 20px;
+      top: 12px;
+      right: 12px;
+      width: 30px;
+      height: 30px;
       fill: green;
     }
     .category-icon {
@@ -325,8 +329,8 @@ function renderCategoriesAndProducts() {
     const checkmark = document.createElement("i");
     checkmark.classList.add("checkmark");
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("width", "20");
-    svg.setAttribute("height", "20");
+    svg.setAttribute("width", "30");
+    svg.setAttribute("height", "30");
     svg.setAttribute("viewBox", "0 0 35 35");
     svg.setAttribute("fill", "none");
     svg.innerHTML = `
