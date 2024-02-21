@@ -23,134 +23,77 @@
   <div id="products"></div>
 
   <script>
-    const productData = [
-      {
-        id: 1, 
-        category: "Tagesgeldkonto",
-        title: "Tagesgeldkonto", 
-        subtitle: "Kostenlos und sicher Vermögen parken", 
-        features: [
-            "0,60 % p. a. auf Ihr Tagesgeld bis 250.000 Euro für 6 Monate",
-            "Ihr Geld ist jederzeit verfügbar."
-        ], 
-        buttonText:"Zum Tagesgeldkonto",
-        imgLink: "https://aktionen.consorsbank.de/ev/ev_beste_angebote/assets/images/2023-10-05-HEIMAT-CONSORS-BANK-kwk.jpg"
-      }, 
-      {
-        id: 2, 
-        category: "Wertpapiere",
-        title: "Sparplan", 
-        subtitle: "Kleine Sparrate, große Träume", 
-        features: [
-            "20 Euro Prämie für den Abschluss Ihres ersten Sparplans",
-            "Sparrate schon ab 10 Euro"
-        ], 
-        buttonText:"Zum Sparplan",
-        imgLink: "https://aktionen.consorsbank.de/ev/ev_beste_angebote/assets/images/Beste_Angebot_482x247.jpg"
-      }, 
-      {
-        id: 3, 
-        category: "Wertpapiere",
-        title: "Wertpapierdepot", 
-        subtitle: "Vielfältige Möglichkeiten zum Vermögensaufbau", 
-        features: [
-            "6 Monate für 0 Euro Ordergebühr traden (zzgl. marktüblicher Spreads)",
-            "Kostenlose Depotführung"
-        ], 
-        buttonText:"Zum Wartpapierdepot",
-        imgLink: "https://aktionen.consorsbank.de/ev/ev_beste_angebote/assets/images/Girokonto_Vergleichsseite_Beste-Angebote-1_482x247.jpg"
-      }, 
-      {
-        id: 4, 
-        category: "Wertpapiere",
-        title: "Junior Depot", 
-        subtitle: "Mittel- bis langfristig vorsorgen für Ihr Kind", 
-        features: [
-            "kostenlose Depotführung",
-            "Schnell und einfach über das Geld verfügen"
-        ], 
-        buttonText:"Zum Junior-Deport",
-        imgLink: "https://aktionen.consorsbank.de/ev/ev_beste_angebote/assets/images/2023-10-05-HEIMAT-CONSORS-BANK-kwk.jpg"
-      }, 
-      {
-        id: 5, 
-        category: "Girokonto",
-        title: "Girokonto Essential", 
-        subtitle: "Sehr gut bewertet mit vielfältigen Bezahlmöglichkeiten", 
-        features: [
-            "kostenloses Girokonto bei monatlichem Geldeingang ab 700 Euro oder für alle unter 28 Jahren*",
-            "Kostenlose Visa Card inklusive"
-        ], 
-        buttonText:"Zum Girokonto Essential",
-        imgLink: "https://aktionen.consorsbank.de/ev/ev_beste_angebote/assets/images/Beste_Angebot_482x247.jpg"
-      }, 
-      {
-        id: 6, 
-        category: "Girokonto",
-        title: "Girokonto Unlimited", 
-        subtitle: "Premium-Girokonto mit Visa Card Gold", 
-        features: [
-            "Für nur 9€ mtl.: weltweit gebührenfrei bezahlen und Bargeld abheben**",
-            "Reiseversicherungen, Handy-Schutzbrief und weitere Services inklusive"
-        ], 
-        buttonText:"Zum Girokonto Unlimited",
-        imgLink: "https://aktionen.consorsbank.de/ev/ev_beste_angebote/assets/images/Girokonto_Vergleichsseite_Beste-Angebote-1_482x247.jpg"
+
+    const api_url = "https://raw.githubusercontent.com/Ramrachai/echologyx-test/master/dev/echologyx/Ram/products.json"
+
+    let productData = []
+
+    async function getProducts() {
+      let res = await fetch(api_url)
+      let data = await res.json()
+      console.log("data-- ", data)
+      productData = await data
+
+      renderCategoriesAndProducts();
+    }
+
+    async function renderCategoriesAndProducts() {
+      const categoriesContainer = document.getElementById('categories');
+      const productsContainer = document.getElementById('products');
+
+      // Render categories
+      const categories = [...new Set(productData.map(product => product.category))];
+      categories.forEach(category => {
+        const categoryCard = document.createElement('div');
+        categoryCard.classList.add('category-card');
+        categoryCard.textContent = category;
+        let isHidden = false;
+        categoryCard.addEventListener('click', () => {
+          isHidden = !isHidden;
+          toggleProducts(category, isHidden);
+        });
+        categoriesContainer.appendChild(categoryCard);
+      });
+
+      // Render products
+      function renderProducts(products) {
+        productsContainer.innerHTML = '';
+        products.forEach(product => {
+          const productCard = document.createElement('div');
+          productCard.classList.add('product-card');
+          productCard.id = `product-${product.id}`; // Set unique ID for each product card
+          productCard.innerHTML = `
+            <h3>${product.title}</h3>
+            <p>${product.subtitle}</p>
+            <ul>
+              ${product.features.map(feature => `<li>${feature}</li>`).join('')}
+            </ul>
+            <button>${product.buttonText}</button>
+            <img width="100" src="${product.imgLink}" alt="${product.title}">
+          `;
+          productsContainer.appendChild(productCard);
+        });
       }
-    ];
 
-    const categoriesContainer = document.getElementById('categories');
-    const productsContainer = document.getElementById('products');
-
-    // Render categories
-    const categories = [...new Set(productData.map(product => product.category))];
-    categories.forEach(category => {
-      const categoryCard = document.createElement('div');
-      categoryCard.classList.add('category-card');
-      categoryCard.textContent = category;
-      let isHidden = false;
-      categoryCard.addEventListener('click', () => {
-        isHidden = !isHidden;
-        toggleProducts(category, isHidden);
-      });
-      categoriesContainer.appendChild(categoryCard);
-    });
-
-    // Render products
-    function renderProducts(products) {
-      productsContainer.innerHTML = '';
-      products.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('product-card');
-        productCard.id = `product-${product.id}`; // Set unique ID for each product card
-        productCard.innerHTML = `
-          <h3>${product.title}</h3>
-          <p>${product.subtitle}</p>
-          <ul>
-            ${product.features.map(feature => `<li>${feature}</li>`).join('')}
-          </ul>
-          <button>${product.buttonText}</button>
-          <img width="100" src="${product.imgLink}" alt="${product.title}">
-        `;
-        productsContainer.appendChild(productCard);
-      });
-    }
-
-    function toggleProducts(category, isHidden) {
-      const filteredProducts = productData.filter(product => product.category === category);
-      filteredProducts.forEach(product => {
-        const productCard = document.getElementById(`product-${product.id}`);
-        if (productCard) {
-          if (isHidden) {
-            productCard.classList.add('hidden');
-          } else {
-            productCard.classList.remove('hidden');
+      function toggleProducts(category, isHidden) {
+        const filteredProducts = productData.filter(product => product.category === category);
+        filteredProducts.forEach(product => {
+          const productCard = document.getElementById(`product-${product.id}`);
+          if (productCard) {
+            if (isHidden) {
+              productCard.classList.add('hidden');
+            } else {
+              productCard.classList.remove('hidden');
+            }
           }
-        }
-      });
+        });
+      }
+
+      // Initially show all products
+      renderProducts(productData);
     }
 
-    // Initially show all products
-    renderProducts(productData);
+    getProducts();
   </script>
 </body>
 </html>

@@ -2,6 +2,11 @@
 
 const api_url = "https://raw.githubusercontent.com/Ramrachai/echologyx-test/master/dev/echologyx/Ram/products.json"
 
+const icon1 = "https://res.cloudinary.com/ramrachai/image/upload/v1708434932/ou9hjlu8orzfig3o5jd2.svg"
+const icon2 = "https://res.cloudinary.com/ramrachai/image/upload/v1708434932/x8mzqfnnxa55opyfvuft.svg"
+const icon3 = "https://res.cloudinary.com/ramrachai/image/upload/v1708434932/gstunorpjfyaugsf97sa.svg"
+
+
 let productData = []
 
 async function getProducts() {
@@ -27,9 +32,18 @@ function renderCategoriesAndProducts() {
       width: 200px;
       display: inline-block;
       cursor: pointer;
+      position: relative;
     }
     .hidden {
       display: none;
+    }
+    .checkmark {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 20px;
+      height: 20px;
+      fill: green;
     }
   `;
   document.head.appendChild(style);
@@ -56,11 +70,20 @@ function renderCategoriesAndProducts() {
     categoryCard.classList.add('category-card');
     categoryCard.textContent = category;
     let isHidden = false;
+    const checkIcon = createCheckmarkSVG(); // Create checkmark SVG
+    categoryCard.appendChild(checkIcon); // Append checkmark to category card
     categoryCard.addEventListener('click', () => {
       isHidden = !isHidden;
       toggleProducts(category, isHidden);
+      // Toggle checkmark visibility based on isHidden value
+      checkIcon.style.display = isHidden ? 'none' : 'block';
     });
     categoriesContainer.appendChild(categoryCard);
+
+    // Initially hide checkmark if products are hidden
+    if (isHidden) {
+      checkIcon.style.display = 'none';
+    }
   });
 
   // Render products
@@ -82,7 +105,7 @@ function renderCategoriesAndProducts() {
       productsContainer.appendChild(productCard);
     });
 
-    updateResult(products.length);
+    updateResult(products.filter(product => !productCardIsHidden(product.id)).length);
   }
 
   function toggleProducts(category, isHidden) {
@@ -98,16 +121,33 @@ function renderCategoriesAndProducts() {
       }
     });
 
-    // Count visible products and update result
-    const visibleProducts = productData.filter(product => {
-      return !isHidden || product.category !== category;
-    });
-    updateResult(visibleProducts.length);
+    updateResult(productData.filter(product => !productCardIsHidden(product.id)).length);
   }
 
   // Update result container with the number of visible products
   function updateResult(count) {
     resultContainer.textContent = `Result: ${count} Product${count !== 1 ? 's' : ''}`;
+  }
+
+  // Check if a product card is hidden
+  function productCardIsHidden(id) {
+    const productCard = document.getElementById(`product-${id}`);
+    return productCard && productCard.classList.contains('hidden');
+  }
+
+  // Create checkmark SVG
+  function createCheckmarkSVG() {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.classList.add('checkmark');
+    svg.setAttribute('width', '20');
+    svg.setAttribute('height', '20');
+    svg.setAttribute('viewBox', '0 0 35 35');
+    svg.setAttribute('fill', 'none');
+    svg.innerHTML = `
+      <circle cx="17.5" cy="17.5" r="16.5" fill="#61AF34" stroke="white" stroke-width="2"/>
+      <path d="M15.6083 27L8 19.7309L9.99623 18.283L15.2316 23.2768L25.7778 8L28 9.06376L15.6083 27Z" fill="white"/>
+    `;
+    return svg;
   }
 
   // Initially show all products
